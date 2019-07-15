@@ -1,0 +1,35 @@
+- name: copy the motd handler script
+  copy:
+    src: motd/files/motd_handler.py
+    dest: '{{ install_path }}/' 
+    owner: root
+    group: root
+    mode: '0640'
+  notify: restart motd handler service
+ 
+- name: copy the motd handler service
+  copy:
+    src: motd/files/motd_handler.service
+    dest: '{{ service_path }}/system/'
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart motd handler service
+
+- name: copy the motd handler service preset
+  copy:
+    src: motd/files/motd_handler.preset
+    dest: '{{ service_path }}/system/'
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart motd handler service
+
+- name: copy the motd handler service timer
+  copy:
+    src: motd/files/motd_handler.timer
+    dest: '{{ service_path }}/system/'
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart motd handler service

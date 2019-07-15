@@ -1,0 +1,42 @@
+- name: copy the motd api script
+  copy:
+    src: motd/files/motd_api.py
+    dest: '{{ install_path }}/' 
+    owner: root
+    group: root
+    mode: '0640'
+  notify: restart motd api service
+
+- name: copy motd api requirements
+  copy:
+    src: motd/files/requirements.txt
+    dest: '{{ install_path }}/'
+    owner: root
+    group: root
+    mode: '0640'
+
+- name: install requirements via pip3
+  shell: pip3 install -r '{{ install_path }}/requirements.txt'
+ 
+- name: check if we are in a docker container
+  shell: 'grep -q docker /proc/1/cgroup'
+  ignore_errors: yes
+  register: is_container
+
+- name: copy the motd service
+  copy:
+    src: motd/files/motd_api.service
+    dest: '{{ service_path }}/system/'
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart motd api service
+
+- name: copy the motd service preset
+  copy:
+    src: motd/files/motd_api.preset
+    dest: '{{ service_path }}/system/'
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart motd api service

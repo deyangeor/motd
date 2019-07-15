@@ -1,0 +1,18 @@
+- name: check if we are in a docker container
+  shell: 'grep -q docker /proc/1/cgroup'
+  ignore_errors: yes
+  register: is_container
+
+- name: restart motd api service
+  systemd:
+    name: motd_api
+    daemon_reload: yes
+    state: restarted
+  when: is_container.rc != 0
+
+- name: restart motd handler service
+  systemd:
+    name: motd_handler
+    daemon_reload: yes
+    state: restarted
+  when: is_container.rc != 0

@@ -1,0 +1,13 @@
+[Unit]
+Description=motd api service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /root/motd/motd_handler.py
+Type=one-shot
+RemainAfterExit=yes
+RuntimeDirectory=/root/motd
+RuntimeDirectoryMode=0750
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,43 @@
+{
+    "provisioners": [
+            {
+                "type": "ansible",
+                "playbook_file": "../docker/ansible/site.yml"
+            }
+        ],
+
+	"builders": [{
+		"name": "centos-7-qemu-qcow2",
+		"vm_name": "centos-7-qemu.qcow2",
+		"type": "qemu",
+		"iso_url": "http://mirrors.neterra.net/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1810.iso",
+                "iso_checksum": "38d5d51d9d100fd73df031ffd6bd8b1297ce24660dc8c13a3b8b4534a4bd291c",
+	    	"output_directory": "target",
+		"ssh_wait_timeout": "90m",
+		"shutdown_command": "shutdown -P now",
+                "cpus": 1,
+                "memory": 2048,
+		"disk_size": 8000,
+		"format": "qcow2",
+		"headless": true,
+		"http_directory": "kickstart",
+		"http_port_min": 10082,
+		"http_port_max": 10089,
+                "vnc_bind_address": "0.0.0.0",
+		"vnc_port_min": 5900,
+		"vnc_port_max": 5900,
+		"ssh_host_port_min": 2222,
+		"ssh_host_port_max": 2229,
+		"ssh_username": "root",
+		"ssh_password": "12345678",
+		"ssh_port": 22,
+		"net_device": "virtio-net",
+		"disk_interface": "virtio",
+		"boot_command": [
+			"<tab> <bs><bs><bs><bs><bs><bs>acpi=off text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centos7-ks.cfg<enter><wait>"
+		]
+	}],
+	"post-processors": [
+
+	]
+}

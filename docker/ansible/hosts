@@ -1,0 +1,2 @@
+[motd_api]
+localhost ansible_connection=local

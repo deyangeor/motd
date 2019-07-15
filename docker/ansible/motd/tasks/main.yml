@@ -1,0 +1,6 @@
+- name: include api tasks
+  include_tasks: motd_api.yml 
+
+- name: include handler tasks  
+  include_tasks: motd_handler.yml
+

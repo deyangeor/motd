@@ -1,0 +1,2 @@
+install_path: /opt/motd
+service_path: /etc/systemd/system
